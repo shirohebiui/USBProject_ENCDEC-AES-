@@ -14,13 +14,13 @@ def filehash(path, key):
     key_bytes = key.encode('utf-8')
     key_bytes = key_bytes.ljust(16, b'0')[:16]
 
-    h = hashlib.sha256()
-    h.update(key_bytes)
-    with open(path, 'rb') as f:
-        while chunk := f.read(4096):
-            h.update(chunk)
-
-    hash_value = h.hexdigest()
+    h = hashlib.sha256() # SHA-256 해시 객체 생성
+    h.update(key_bytes) # 키를 먼저 해시에 반영하여 키 종속적 해시 생성
+    with open(path, 'rb') as f: # 파일 열기
+        while chunk := f.read(4096): # 4KB씩 읽으며
+            h.update(chunk) # 데이터 블록을 해시에 계속 반영
+    hash_value = h.hexdigest() # 최종 해시값을 16진수 문자열로 반환
+    
     hash_path = path + ".hash"
     with open(hash_path, 'w') as f:
         f.write(hash_value)
@@ -42,9 +42,10 @@ def aes(path, key):
     with open(path, "rb") as f_in:
         plaintext = f_in.read()
 
-    iv = get_random_bytes(16)
-    cipher = AES.new(key_bytes, AES.MODE_CBC, iv)
-    ciphertext = cipher.encrypt(pad(plaintext, AES.block_size))
+    iv = get_random_bytes(16) # 16바이트 길이의 무작위 IV(초기화 벡터) 생성
+    cipher = AES.new(key_bytes, AES.MODE_CBC, iv) # CBC 모드로 AES 암호화 객체 생성
+    ciphertext = cipher.encrypt(pad(plaintext, AES.block_size)) # 평문에 패딩을 추가한 후 암호화 수행
+
 
     with open(out_path, "wb") as f_out:
         f_out.write(iv + ciphertext)
@@ -89,9 +90,8 @@ def dec_aes(file_paths, key):
                 data = f_in.read()
                 iv = data[:16]
                 ciphertext = data[16:]
-
-                cipher = AES.new(key_bytes, AES.MODE_CBC, iv)
-                plaintext = unpad(cipher.decrypt(ciphertext), AES.block_size)
+                cipher = AES.new(key_bytes, AES.MODE_CBC, iv)  # 동일한 키와 IV로 복호화 객체 생성
+                plaintext = unpad(cipher.decrypt(ciphertext), AES.block_size) # 암호문을 복호화한 후 패딩 제거
 
             with open(out_path, "wb") as f_out:
                 f_out.write(plaintext)
@@ -126,18 +126,18 @@ def isValidDec(hash_path, key):
     key_bytes = key_bytes.ljust(16, b'0')[:16]
 
     # 암호화된 파일(.Henc)을 그대로 해시
-    h = hashlib.sha256()
-    h.update(key_bytes)
-    with open(enc_path, 'rb') as f:
-        while chunk := f.read(4096):
-            h.update(chunk)
-    new_hash = h.hexdigest()
+    h = hashlib.sha256() # SHA-256 해시 객체 생성
+    h.update(key_bytes) # 키를 먼저 해시에 반영하여 키 종속적 해시 생성
+    with open(enc_path, 'rb') as f: # 파일 열기
+        while chunk := f.read(4096): # 4KB씩 읽으며
+            h.update(chunk) # 데이터 블록을 해시에 계속 반영
+    new_hash = h.hexdigest() # 최종 해시값을 16진수 문자열로 반환
 
     # 저장된 해시와 비교
     with open(hash_path, 'r') as f:
         stored_hash = f.read().strip()
 
-    if new_hash == stored_hash:
+    if new_hash == stored_hash: # 새로 계산한 해시와 기존 해시를 비교하여 무결성 확인
         print(f"[무결성 검사 통과] {enc_path}")
         return True
     else:
