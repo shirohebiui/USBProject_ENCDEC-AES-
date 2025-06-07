@@ -1,0 +1,16 @@
+sudo apt update
+sudo apt install mysql-server
+sudo service mysql start
+
+server
+pip install pyotp
+pip install pyqrcode pypng
+pip install pyotp pyqrcode pypng
+pip install mysql-connector-python
+
+client
+pip install --upgrade Pillow
+pip install PyQt5 requests
+pip install pyqrcode pypng clipboard
+pip install qrcode[pil]
+pip install qrcode

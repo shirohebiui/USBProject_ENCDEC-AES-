@@ -1,0 +1,17 @@
+--server.py에서 접속하기 위해 비밀번호설정
+mysql -u root -p
+ALTER USER 'root'@'%' IDENTIFIED BY '1234'
+FLUSH PRIVILEGES;
+
+--DB + table 생성
+CREATE DATABASE usb_project;
+USE usb_project;
+
+CREATE TABLE users (
+    id VARCHAR(50) PRIMARY KEY,
+    pw VARCHAR(100) NOT NULL,
+    totp VARCHAR(100) NOT NULL,
+    aes_key CHAR(16) NOT NULL
+);
+
+
