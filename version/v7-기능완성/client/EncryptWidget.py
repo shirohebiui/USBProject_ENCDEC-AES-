@@ -18,12 +18,10 @@ class EncryptWidget(QWidget):
         self.right_file_paths = []
 
         self.file_status_1 = QTextEdit()
-        self.file_status_1.setStyleSheet("background-color: #ffffff; padding: 12px; border: 1px solid #ccc; border-radius: 10px; font-family: Segoe UI; font-size: 14px;")
         self.file_status_1.setPlaceholderText("원본 파일을 드래그 하세요 (입력)")
         self.file_status_1.setReadOnly(True)
 
         self.file_status_2 = QTextEdit()
-        self.file_status_2.setStyleSheet("background-color: #fafafa; padding: 12px; border: 1px solid #ccc; border-radius: 10px; font-family: Segoe UI; font-size: 14px;")
         self.file_status_2.setPlaceholderText("결과 파일이 여기에 출력됩니다 (출력)")
         self.file_status_2.setReadOnly(True)
 
@@ -37,10 +35,8 @@ class EncryptWidget(QWidget):
         key_layout.addWidget(self.key_input)
         key_layout.addStretch()
 
-        self.encrypt_btn = QPushButton("🔒 암호화")
-        self.encrypt_btn.setStyleSheet("background-color: #0078d7; color: white; padding: 10px 20px; font-weight: bold; border: none; border-radius: 8px; font-family: Segoe UI; font-size: 14px;")
-        self.decrypt_btn = QPushButton("🔓 복호화")
-        self.decrypt_btn.setStyleSheet("background-color: #107c10; color: white; padding: 10px 20px; font-weight: bold; border: none; border-radius: 8px; font-family: Segoe UI; font-size: 14px;")
+        self.encrypt_btn = QPushButton("암호화")
+        self.decrypt_btn = QPushButton("복호화")
 
         btn_layout = QHBoxLayout()
         btn_layout.addWidget(self.encrypt_btn)
@@ -56,7 +52,6 @@ class EncryptWidget(QWidget):
         layout.addLayout(btn_layout)
 
         self.setLayout(layout)
-        self.setStyleSheet("background-color: #f0f2f5; font-family: Segoe UI;")
 
     def dragEnterEvent(self, event: QDragEnterEvent):
         if event.mimeData().hasUrls():

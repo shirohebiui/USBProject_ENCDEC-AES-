@@ -21,22 +21,17 @@ class LoginWidget(QWidget):
         self.switch_callback = switch_callback
 
         self.id_input = QLineEdit()
-        self.id_input.setStyleSheet("padding: 8px; border: 1px solid #ccc; border-radius: 6px; font-family: Segoe UI; font-size: 13px;")
         self.id_input.setPlaceholderText("ID 입력")
 
         self.pw_input = QLineEdit()
-        self.pw_input.setStyleSheet("padding: 8px; border: 1px solid #ccc; border-radius: 6px; font-family: Segoe UI; font-size: 13px;")
         self.pw_input.setPlaceholderText("Password 입력")
         self.pw_input.setEchoMode(QLineEdit.Password)
 
         self.totp_input = QLineEdit()
-        self.totp_input.setStyleSheet("padding: 8px; border: 1px solid #ccc; border-radius: 6px; font-family: Segoe UI; font-size: 13px;")
         self.totp_input.setPlaceholderText("6자리 OTP 입력")
 
-        self.register_btn = QPushButton("📝 회원가입")
-        self.register_btn.setStyleSheet("background-color: #0078d7; color: white; padding: 10px 18px; border: none; border-radius: 6px; font-family: Segoe UI; font-size: 13px; font-weight: bold;")
-        self.login_btn = QPushButton("🔐 로그인")
-        self.login_btn.setStyleSheet("background-color: #107c10; color: white; padding: 10px 18px; border: none; border-radius: 6px; font-family: Segoe UI; font-size: 13px; font-weight: bold;")
+        self.register_btn = QPushButton("회원가입")
+        self.login_btn = QPushButton("로그인")
 
         self.register_btn.clicked.connect(self.register)
         self.login_btn.clicked.connect(self.login)
@@ -55,7 +50,6 @@ class LoginWidget(QWidget):
 
         layout.addLayout(btn_layout)
         self.setLayout(layout)
-        self.setStyleSheet("background-color: #f5f7fa; font-family: Segoe UI;")
 
     def register(self):
         id = self.id_input.text()

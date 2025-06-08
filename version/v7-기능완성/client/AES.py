@@ -4,7 +4,6 @@ from Crypto.Util.Padding import pad, unpad
 from Crypto.Random import get_random_bytes
 import os
 import hashlib
-import ctypes
 
 # 해시파일 생성 함수
 def filehash(path, key):
@@ -27,8 +26,6 @@ def filehash(path, key):
         f.write(hash_value)
 
     print(f"[해시 생성 완료] {hash_path}")
-    ctypes.windll.kernel32.SetFileAttributesW(hash_path, 0x02)
-    print(f"[해시 숨김 완료] {hash_path}")
 
 # 하나의 파일을 AES로 암호화
 def aes(path, key):
